@@ -14,6 +14,9 @@ class Author(models.Model):
 class Category(models.Model):
     category = models.CharField(max_length=50, unique=True)
 
+    def __str__(self):
+        return f'{self.category.title()}'
+
 
 class Post(models.Model):
     article = "ar"
@@ -45,6 +48,9 @@ class Post(models.Model):
             return f'{self.text[:124]}...'
         else:
             return self.text
+
+    def __str__(self):
+        return f'{self.headline.title()}: {self.text[:20]}'
 
 
 class PostCategory(models.Model):
