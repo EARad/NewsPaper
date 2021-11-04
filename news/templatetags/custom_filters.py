@@ -1,6 +1,7 @@
 from django import template
 from random import sample
 
+
 register = template.Library()
 
 
@@ -31,5 +32,3 @@ def censor(value):
 
     list_curse.close()
     return (' '.join(new_res))
-
-print(censor('Ебать сука пизда гуси лебеди блядь паук'))

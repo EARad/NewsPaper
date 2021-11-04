@@ -1,25 +1,54 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
+from django.core.paginator import Paginator
+from django.shortcuts import render
+
+from .filters import PostsFilter
+from .templates.forms import PostForm
 
 
-class PostsList(ListView):
+class Posts(ListView):
     model = Post
     template_name = 'posts.html'
     context_object_name = 'posts'
-    queryset = Post.objects.order_by('-date')
+    ordering = ['-date']
+    paginate_by = 10
 
-    # def date_new (self):
-    #     date_n = Post.date
-    #     return date_n.models.DateField
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['time_now'] = Post.date  # добавим переменную текущей даты time_now
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = PostsFilter(self.request.GET, queryset=self.get_queryset())
+        print(str(context['filter']))
+        return context
 
 
-class PostDetail(DetailView):
-    model = Post
-    template_name = 'post.html'
-    context_object_name = 'post'
+class PostDetailView(DetailView):
+    template_name = 'post_detail.html'
+    queryset = Post.objects.all()
+
+
+class PostCreateView(CreateView):
+    template_name = 'post_create.html'
+    form_class = PostForm
+
+
+class PostUpdateView(UpdateView):
+    template_name = 'post_create.html'
+    form_class = PostForm
+
+    def get_object(self, **kwargs):
+        id = self.kwargs.get('pk')
+        return Post.objects.get(pk=id)
+
+
+class PostDeleteView(DeleteView):
+    template_name = 'post_delete.html'
+    queryset = Post.objects.all()
+    success_url = '/news/'
+
+
+class PostSearch(Posts):
+    template_name = 'post_search.html'
+
+
+
 
