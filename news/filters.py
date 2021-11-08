@@ -1,16 +1,21 @@
-
-from django_filters import FilterSet
+from django_filters import DateFilter, FilterSet
 from .models import Post
-from django.shortcuts import render
+
+
 
 
 class PostsFilter(FilterSet):
-    class Meta:
+    time_of_creation = DateFilter
 
+    class Meta:
         model = Post
         fields = {
             'headline': ['icontains'],
             'post_author': ['exact'],
-            'date': ['gt']
+            'date': ['gt'],
         }
+
+
+
+
 

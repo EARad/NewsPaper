@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .filters import PostsFilter
 from .templates.forms import PostForm
@@ -13,12 +13,14 @@ class Posts(ListView):
     context_object_name = 'posts'
     ordering = ['-date']
     paginate_by = 10
+    form_class = PostForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = PostsFilter(self.request.GET, queryset=self.get_queryset())
-        print(str(context['filter']))
         return context
+
+
 
 
 class PostDetailView(DetailView):
@@ -31,7 +33,7 @@ class PostCreateView(CreateView):
     form_class = PostForm
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'post_create.html'
     form_class = PostForm
 
@@ -48,6 +50,13 @@ class PostDeleteView(DeleteView):
 
 class PostSearch(Posts):
     template_name = 'post_search.html'
+
+
+
+
+
+
+
 
 
 
