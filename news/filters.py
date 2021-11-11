@@ -1,7 +1,5 @@
-
 from django_filters import FilterSet
 from .models import Post
-from django.shortcuts import render
 
 
 class PostsFilter(FilterSet):

@@ -6,16 +6,16 @@ from django.views.generic.edit import CreateView
 from .models import BaseRegisterForm
 
 
+class BaseRegisterView(CreateView):
+    model = User
+    form_class = BaseRegisterForm
+    success_url = '/news/profile/'
+
+
 @login_required
 def upgrade_me(request):
     user = request.user
     authors_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         authors_group.user_set.add(user)
-    return redirect('/')
-
-
-class BaseRegisterView(CreateView):
-    model = User
-    form_class = BaseRegisterForm
-    success_url = '/'
+    return redirect('/news/profile/')

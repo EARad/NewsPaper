@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from news.models import Post, Category
+from .models import Post
 
 
 class PostForm(ModelForm):

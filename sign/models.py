@@ -5,15 +5,6 @@ from django.contrib.auth.models import User
 from django import forms
 
 
-class CommonSignupForm(SignupForm):
-
-    def save(self, request):
-        user = super(CommonSignupForm, self).save(request)
-        basic_group = Group.objects.get(name='common')
-        basic_group.user_set.add(user)
-        return user
-
-
 class BaseRegisterForm(UserCreationForm):
     email = forms.EmailField(label = "Email")
     first_name = forms.CharField(label = "Имя")
@@ -27,3 +18,12 @@ class BaseRegisterForm(UserCreationForm):
                   "email",
                   "password1",
                   "password2", )
+
+
+class CommonSignupForm(SignupForm):
+
+    def save(self, request):
+        user = super(CommonSignupForm, self).save(request)
+        basic_group = Group.objects.get(name='common')
+        basic_group.user_set.add(user)
+        return user

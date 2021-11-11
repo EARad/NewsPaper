@@ -1,11 +1,9 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
-from django.core.paginator import Paginator
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import TemplateView
 from .filters import PostsFilter
-from .templates.forms import PostForm
+from .forms import PostForm
 
 
 class Posts(ListView):
@@ -46,7 +44,7 @@ class PostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 class PostDeleteView(DeleteView):
     template_name = 'post_delete.html'
     queryset = Post.objects.all()
-    success_url = '/news/'
+    success_url = '/'
 
 
 class PostSearch(Posts):
