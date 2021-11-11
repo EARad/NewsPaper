@@ -7,9 +7,6 @@
 {% block content %}
 <h1>Все новости</h1>
 <h2>Всего новостей: {{ posts|length }}</h2>
-
-<a href="{% url 'post_search' %}">Поиск новостей</a>
-
 {% if posts %}
 <table>
     <thead>

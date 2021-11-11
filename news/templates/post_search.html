@@ -7,12 +7,9 @@
 {% block content %}
 <h1>Поиск новостей</h1>
 <h2>Всего новостей: {{ posts|length }}</h2>
-
-<a href="{% url 'posts' %}">На главную</a>
-
 <form method='GET'>
     {{ filter.form }}
-    <input type="date" name="my_date">
+<!--    <input type="date" name="my_date">-->
     <input type='submit' value='Найти'>
 </form>
 
