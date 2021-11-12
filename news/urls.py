@@ -10,7 +10,7 @@ urlpatterns = [
     path('update/<int:pk>', PostUpdateView.as_view(), name='post_update'),
     path('delete/<int:pk>', PostDeleteView.as_view(), name='post_delete'),
     path('search/', PostSearch.as_view(), name='post_search'),
-    path('', IndexView.as_view(), name='index'),
+    #path('', IndexView.as_view(), name='index'),
     path('accounts/', include('allauth.urls')),
     path('profile/', IndexView.as_view()),
     ]
