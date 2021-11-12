@@ -3,7 +3,7 @@ from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import TemplateView
 from .filters import PostsFilter
-from .forms import PostForm
+from .forms import PostForm, UserForm
 
 
 class Posts(ListView):
@@ -59,5 +59,8 @@ class IndexView(LoginRequiredMixin, TemplateView):
         return context
 
 
-
+class IndexUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'index.html.html'
+    form_class = UserForm
+    success_url = '/news/profile/'
 
