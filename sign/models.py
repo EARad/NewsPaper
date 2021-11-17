@@ -1,7 +1,6 @@
 from allauth.account.forms import SignupForm
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django import forms
 
 

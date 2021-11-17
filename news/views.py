@@ -1,9 +1,8 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic import TemplateView
 from .filters import PostsFilter
-from .forms import PostForm, UserForm
+from .forms import PostForm
 
 
 class Posts(ListView):
@@ -47,20 +46,14 @@ class PostDeleteView(DeleteView):
     success_url = '/'
 
 
-class PostSearch(Posts):
+class PostSearch(ListView):
+    model = Post
     template_name = 'post_search.html'
-
-class IndexView(LoginRequiredMixin, TemplateView):
-    template_name = 'index.html'
+    context_object_name = 'news'
+    ordering = ['-date']
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['is_not_authors'] = not self.request.user.groups.filter(name='authors').exists()
+        context['filter'] = PostsFilter(self.request.GET, queryset=self.get_queryset())
         return context
-
-
-class IndexUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = 'index.html.html'
-    form_class = UserForm
-    success_url = '/news/profile/'
-

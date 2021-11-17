@@ -9,7 +9,7 @@ from .models import BaseRegisterForm
 class BaseRegisterView(CreateView):
     model = User
     form_class = BaseRegisterForm
-    success_url = '/news/profile/'
+    success_url = '/'
 
 
 @login_required
@@ -18,4 +18,4 @@ def upgrade_me(request):
     authors_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         authors_group.user_set.add(user)
-    return redirect('/news/profile/')
+    return redirect('/')
