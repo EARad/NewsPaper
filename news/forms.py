@@ -7,7 +7,8 @@ class PostForm(ModelForm):
         model = Post
         fields = ['post_author', 'post_category', 'choise_type', 'headline', 'text']
 
-# class SearchForm(ModelForm):
-#     class Meta:
-#         model = Post
-#         fields = ['post_author', 'headline']
+
+class SearchForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['post_author', 'headline']

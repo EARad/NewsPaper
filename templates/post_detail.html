@@ -1,32 +1,42 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'base.html' %}
 
 {% load custom_filters %}
 
 {% block title %} Posts {% endblock title %}
 
 {% block content %}
-<table>
-    <thead>
-        <th>
-            Заголовок
-        </th>
-        <th>
-            Дата публикации
-        </th>
-        <th>
-            Предварительный просмотр
-        </th>
-    </thead>
-    <tr>
-         <td>
-            {{ post.headline|censor }}
-        </td>
-        <td>
-            {{ post.date|date:'d-m-Y' }}
-        </td>
-        <td>
-            {{ post.text|censor }}
-        </td>
-    </tr>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr>
+<td style="width: 33.3333%; text-align: center;">
+<h2>Заголовок</h2>
+</td>
+<td style="width: 33.3333%; text-align: center;">
+<h2>Дата публикации</h2>
+</td>
+<td style="width: 33.3333%; text-align: center;">
+<h2>Предварительный просмотр</h2>
+</td>
+</tr>
+</tbody>
 </table>
+<hr />
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 100%;">
+<tbody>
+<tr>
+<td style="width: 33.3333%; text-align: center;">
+<h3>{{ post.headline|censor }}&nbsp;</h3>
+</td>
+<td style="width: 33.3333%; text-align: center;">
+<h3>{{ post.date|date:'d-m-Y' }}</h3>
+</td>
+<td style="width: 33.3333%; text-align: center;">
+<h3>{{ post.text|censor }}</h3>
+</td>
+</tr>
+</tbody>
+</table>
+
 {% endblock content %}

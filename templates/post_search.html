@@ -1,4 +1,4 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'base.html' %}
 
 {% load custom_filters %}
 
@@ -9,7 +9,6 @@
 <h2>Всего новостей: {{ posts|length }}</h2>
 <form method='GET'>
     {{ filter.form }}
-<!--    <input type="date" name="my_date">-->
     <input type='submit' value='Найти'>
 </form>
 
@@ -17,13 +16,13 @@
     <table>
         <thead>
             <th>
-                Заголовок
+                <h1>Заголовок</h1>
             </th>
             <th>
-                Дата публикации
+                <h1>Дата публикации</h1>
             </th>
             <th>
-                Предварительный просмотр
+                <h1>Предварительный просмотр</h1>
             </th>
         </thead>
         {% for post in filter.qs %}

@@ -1,8 +1,9 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
+from .models import Post, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .filters import PostsFilter
 from .forms import PostForm
+from django.contrib.auth.decorators import login_required
 
 
 class Posts(ListView):
@@ -12,11 +13,6 @@ class Posts(ListView):
     ordering = ['-date']
     paginate_by = 10
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['filter'] = PostsFilter(self.request.GET, queryset=self.get_queryset())
-        print(str(context['filter']))
-        return context
 
 
 class PostDetailView(DetailView):
@@ -49,7 +45,7 @@ class PostDeleteView(DeleteView):
 class PostSearch(ListView):
     model = Post
     template_name = 'post_search.html'
-    context_object_name = 'news'
+    context_object_name = 'post'
     ordering = ['-date']
     paginate_by = 10
 
@@ -57,3 +53,29 @@ class PostSearch(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = PostsFilter(self.request.GET, queryset=self.get_queryset())
         return context
+
+
+class CategoryView(ListView):
+    model = Category
+    template_name = 'category.html'
+    context_object_name = 'category'
+    queryset = Category.objects.all()
+    paginate_by = 10
+
+
+@login_required
+def subscribe(request):
+    user = request.user
+    category = Category.objects.get(pk=pk)
+    if user not in category.subscribers.all():
+        category.subscribers.add(user)
+    return redirect('news/category/')
+
+
+@login_required
+def unsubscribe(request):
+    user = request.user
+    category = Category.objects.get(pk)
+    if user in category.subscribers.all():
+        category.subscribers.remove(user)
+    return redirect('news/category/')
