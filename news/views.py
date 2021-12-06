@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -12,7 +13,6 @@ class Posts(ListView):
     context_object_name = 'posts'
     ordering = ['-date']
     paginate_by = 10
-
 
 
 class PostDetailView(DetailView):
@@ -45,7 +45,7 @@ class PostDeleteView(DeleteView):
 class PostSearch(ListView):
     model = Post
     template_name = 'post_search.html'
-    context_object_name = 'post'
+    context_object_name = 'post_search'
     ordering = ['-date']
     paginate_by = 10
 
@@ -64,18 +64,18 @@ class CategoryView(ListView):
 
 
 @login_required
-def subscribe(request):
+def subscribe_me(request, cat_id):
     user = request.user
-    category = Category.objects.get(pk=pk)
-    if user not in category.subscribers.all():
+    category = Category.objects.get(pk=cat_id)
+    if request.user not in category.subscribers.all():
         category.subscribers.add(user)
-    return redirect('news/category/')
+    return redirect('/news/category/')
 
 
 @login_required
-def unsubscribe(request):
+def unsubscribe_me(request, cat_id):
     user = request.user
-    category = Category.objects.get(pk)
-    if user in category.subscribers.all():
+    category = Category.objects.get(pk=cat_id)
+    if request.user in category.subscribers.all():
         category.subscribers.remove(user)
-    return redirect('news/category/')
+    return redirect('/news/category/')

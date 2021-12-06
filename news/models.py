@@ -13,10 +13,13 @@ class Author(models.Model):
 
 class Category(models.Model):
     category = models.CharField(max_length=50, unique=True)
+    # subscribers = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     subscribers = models.ManyToManyField(User)
 
     def __str__(self):
         return f'{self.category.title()}'
+
+    objects = models.Manager()
 
 
 class Post(models.Model):
@@ -55,6 +58,8 @@ class Post(models.Model):
 
     def get_absolute_url(self):  # Абсолютный путь. После создания нас перебрасит на страницу с товаром
         return f'/news/{self.id}'
+
+    objects = models.Manager()
 
 
 class PostCategory(models.Model):

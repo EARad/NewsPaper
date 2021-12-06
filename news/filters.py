@@ -9,5 +9,5 @@ class PostsFilter(FilterSet):
         fields = {
             'headline': ['icontains'],
             'post_author': ['exact'],
-            'date': ['date__gte'],
+            # 'date': ['gte'],
         }

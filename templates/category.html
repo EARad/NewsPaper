@@ -5,31 +5,29 @@
 {% block content %}
 <h1>Категории</h1>
 <h2>Всего категорий: {{ category|length }}</h2>
-{% if category %}
+
 <table>
     <thead>
     <th>
         Название категории
     </th>
     </thead>
-    {% for category in category %}
+    {% for item in category %}
     <tr>
         <td>
-            {{ category.category|title }}
+            {{ item.category|title }}
         </td>
         <td>
-            {% if request.user not in category.subscribers.all %}
-             <a href="{% url 'subscribe' category.id %}"><u>Подписаться</u></a>
+            {% if request.user not in item.subscribers.all %}
+            <a href="{% url 'subscribes' item.id %}"><u>Подписаться</u></a>
             {% else %}
-            <a href="{% url 'unsubscribe' category.id %}"><u>Отписаться</u></a>
+            <a href="{% url 'unsubscribes' item.id %}"><u>Отписаться</u></a>
             {% endif %}
         </td>
     </tr>
     {% endfor %}
 </table>
-{% else %}
-<h2>Категории отсутствуют!</h2>
-{% endif %}
+
 
 {% if is_paginated %}
     <div class="pagination">

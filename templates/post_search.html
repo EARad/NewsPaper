@@ -6,32 +6,32 @@
 
 {% block content %}
 <h1>Поиск новостей</h1>
-<h2>Всего новостей: {{ posts|length }}</h2>
+<h2>Всего новостей: {{ post_search|length }}</h2>
 <form method='GET'>
     {{ filter.form }}
+
+    <input id="date" type="date" name="date">
+
     <input type='submit' value='Найти'>
 </form>
 
-{% if posts %}
+{% if post_search %}
     <table>
         <thead>
             <th>
-                <h1>Заголовок</h1>
+                <h3>Заголовок</h3>
             </th>
             <th>
-                <h1>Дата публикации</h1>
+                <h3>Дата публикации</h3>
             </th>
             <th>
-                <h1>Предварительный просмотр</h1>
+                <h3>Предварительный просмотр</h3>
             </th>
         </thead>
         {% for post in filter.qs %}
         <tr>
             <td>
-                <a href="{% url 'post_detail' post.id %}">{{ post.headline|title }}</a>
-                            </td>
-            <td>
-                {{ post.headline|censor }}
+                <a href="{% url 'post_detail' post.id %}">{{ post.headline|censor }}</a>
             </td>
             <td>
                 {{ post.date|date:'d-m-Y' }}
@@ -43,7 +43,7 @@
         {% endfor %}
     </table>
 {% else %}
-    <h2>Новости отсутствуют!</h2>
+    <h2>Новости не найдены!</h2>
 {% endif %}
 
 {% if is_paginated %}
@@ -67,4 +67,5 @@
     {% endif %}
 
 {% endif %}
+
 {% endblock content %}

@@ -43,6 +43,7 @@ comment_text_2 = 'Саундтрек зато шик'
 comment_text_3 = 'Где мои бабки???'
 comment_text_4 = 'ыыы'
 
+
 # создаем Комментарии
 comment_1 = Comment.objects.create(comment_post=article_1, comment_user=user_1, comment_text=comment_text_1)
 comment_2 = Comment.objects.create(comment_post=article_1, comment_user=user_2, comment_text=comment_text_2)
