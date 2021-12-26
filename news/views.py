@@ -1,36 +1,10 @@
-from django.shortcuts import redirect, reverse, render
+from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .filters import PostsFilter
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
-from django.views import View
-from django.core.mail import send_mail
-
-
-# class SendMail(View):
-#
-#     def get(self, request, *args, **kwargs):
-#         return render(request, 'make_mail.html', {})
-#
-#     def post(self, request, *args, **kwargs):
-#         mail = Post(
-#             headline = request.POST['headline'],
-#             text = request.POST['text'],
-#         )
-#         mail.save()
-#
-#         # отправляем письмо
-#         send_mail(
-#             subject=f'{mail.headline}',
-#             # заголовок будет в теме для удобства
-#             message=mail.text,  # текст
-#             from_email='zhenyaradchikov@yandex.ru',  # здесь указываете почту, с которой будете отправлять (об этом попозже)
-#             recipient_list=[]  # здесь список получателей. Например, секретарь, сам врач и т. д.
-#         )
-#
-#         return redirect('mail:make_mail.html')
 
 
 class Posts(ListView):
@@ -65,7 +39,7 @@ class PostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 class PostDeleteView(DeleteView):
     template_name = 'post_delete.html'
     queryset = Post.objects.all()
-    success_url = '/'
+    success_url = '/news/'
 
 
 class PostSearch(ListView):

@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'news',
-    'accounts',
-    'sign',
+    # 'news',
+    # 'accounts',
+    # 'sign',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -51,7 +51,13 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
 
     'django_filters',
-]
+
+    'news.apps.NewsConfig',
+    'sign.apps.SignConfig',
+    'accounts.apps.AccountsConfig',
+
+
+    ]
 
 SITE_ID = 1
 
