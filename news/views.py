@@ -2,9 +2,10 @@ from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from .filters import PostsFilter
-from .forms import PostForm
 from django.contrib.auth.decorators import login_required
+
+from .filters import PostsFilter
+from .forms import PostForm, SearchForm
 
 
 class Posts(ListView):
@@ -23,13 +24,13 @@ class PostDetailView(DetailView):
 class PostCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'post_create.html'
     form_class = PostForm
-    permission_required = ('news.add_post',)
+    permission_required = ('news.post_create',)
 
 
 class PostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'post_create.html'
     form_class = PostForm
-    permission_required = ('news.change_post',)
+    permission_required = ('news.post_update',)
 
     def get_object(self, **kwargs):
         id = self.kwargs.get('pk')
@@ -48,6 +49,7 @@ class PostSearch(ListView):
     context_object_name = 'post_search'
     ordering = ['-date']
     paginate_by = 10
+    form_class = SearchForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

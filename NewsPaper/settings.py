@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'sign.apps.SignConfig',
     'accounts.apps.AccountsConfig',
+    'django_apscheduler',
 
 
     ]
@@ -174,3 +175,6 @@ EMAIL_HOST_PASSWORD = 'hayybdsmjquaqild'  # пароль от почты
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.by'
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds

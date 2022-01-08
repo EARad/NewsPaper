@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,10 +6,9 @@
     <title>{{ post.title }}</title>
 </head>
 <body>
-    <p>Здравствуй, {{ user.username }}. Новая статья в твоём любимом разделе!</p>
-    <hr>
-    <h2>{{ post.headline }}</h2>
-    <p> {{ post.text|truncatechars:50 }} </p>
+
+    <h2>{{ post.headline }} </h2>
+    <p> {{ post.text|truncatechars:20 }} </p>
     <a href="http://127.0.0.1:8000{% url 'post_detail' post.id %}">Читать статью</a>
 </body>
 </html>

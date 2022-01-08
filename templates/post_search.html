@@ -9,9 +9,6 @@
 <h2>Всего новостей: {{ post_search|length }}</h2>
 <form method='GET'>
     {{ filter.form }}
-
-<!--    <input id="date" type="date" name="date">-->
-
     <input type='submit' value='Найти'>
 </form>
 
@@ -19,16 +16,17 @@
     <table>
         <thead>
             <th>
-                <h3>Заголовок</h3>
+                <h3>Заголовок </h3>
             </th>
             <th>
-                <h3>Дата публикации</h3>
+                <h3>Дата публикации </h3>
             </th>
             <th>
-                <h3>Предварительный просмотр</h3>
+                <h3>Предварительный просмотр </h3>
             </th>
         </thead>
         {% for post in filter.qs %}
+        <!-- filter.qs -->
         <tr>
             <td>
                 <a href="{% url 'post_detail' post.id %}">{{ post.headline|censor }}</a>
