@@ -9,6 +9,6 @@
 
     <h2>{{ post.headline }} </h2>
     <p> {{ post.text|truncatechars:20 }} </p>
-    <a href="http://127.0.0.1:8000{% url 'post_detail' post.id %}">Читать статью</a>
+    <a href="http://127.0.0.1:8000/news/{% url 'post_detail' post.id %}">Читать статью</a>
 </body>
 </html>

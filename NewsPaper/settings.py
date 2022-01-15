@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-$!3nwtzv!a66jrd3a6w6yehwtxmvmh9t1n+v=p@i(@=^&t9vh5
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+# DEBUG = False
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -178,3 +178,14 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.by'
 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
+
+# Это является правильной настройкой для винды CELERY_BROKER_URL = 'redis://:{пароль redis}@{Public endpoint}/0'
+# CELERY_RESULT_BACKEND = 'redis://:{пароль redis}@{Public endpoint}/0'
+CELERY_BROKER_URL = 'redis://:K4UIWCDXfACmJCxMRE14dIP6Dpxmz27H@redis-15272.c284.us-east1-2.gce.cloud.redislabs.com:15272/0'
+CELERY_RESULT_BACKEND = 'redis://:K4UIWCDXfACmJCxMRE14dIP6Dpxmz27H@redis-15272.c284.us-east1-2.gce.cloud.redislabs.com:15272/0'
+
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

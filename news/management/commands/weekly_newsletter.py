@@ -28,8 +28,6 @@ def my_job():
             msg.append(f'В вашей любимой категории "{category.category}" за прошедшую'
                        f' неделю появились посты: {category_posts}')
         message = '\n'.join(msg)
-        print(message)
-
 
         send_mail(
             subject=f'Привет, {subscriber.username}.',
@@ -37,7 +35,6 @@ def my_job():
             from_email='zhenyaradchikov@yandex.by',
             recipient_list=[subscriber.email],
         )
-        # config('EMAIL_HOST_USER')
 
 
 # функция, которая будет удалять неактуальные задачи
@@ -57,7 +54,7 @@ class Command(BaseCommand):
         scheduler.add_job(
             my_job,
             trigger=CronTrigger(
-                day_of_week="Sat", hour="21", minute="28"
+                day_of_week="Sun", hour="11", minute="00"
             ),
             # То же, что и интервал, но задача тригера таким образом более понятна django
             id="my_job",  # уникальный айди
