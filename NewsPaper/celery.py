@@ -15,7 +15,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'weekly_posts_monday_8am': {
         'task': 'weekly_posts',
-        'schedule': crontab(),
+        'schedule': crontab(minute='0', hour='8', day_of_week=' Mon'),
     },
 }
-# minute='25', hour='21', day_of_week='Thu'

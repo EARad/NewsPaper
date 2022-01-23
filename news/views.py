@@ -3,9 +3,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
-
 from .filters import PostsFilter
 from .forms import PostForm, SearchForm
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 
 class Posts(ListView):
@@ -19,6 +20,15 @@ class Posts(ListView):
 class PostDetailView(DetailView):
     template_name = 'post_detail.html'
     queryset = Post.objects.all()
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object()
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+
+        return obj
 
 
 class PostCreateView(PermissionRequiredMixin, CreateView):
@@ -66,6 +76,7 @@ class CategoryView(ListView):
 
 
 @login_required
+@cache_page(60 * 5)
 def subscribe_me(request, cat_id):
     user = request.user
     category = Category.objects.get(pk=cat_id)
@@ -75,6 +86,7 @@ def subscribe_me(request, cat_id):
 
 
 @login_required
+@cache_page(60 * 5)
 def unsubscribe_me(request, cat_id):
     user = request.user
     category = Category.objects.get(pk=cat_id)
