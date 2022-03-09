@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,9 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 'news',
-    # 'accounts',
-    # 'sign',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -59,6 +57,101 @@ INSTALLED_APPS = [
 
 
     ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s %(message)s'
+        },
+
+        'forwarning': {
+            'level': 'WARNING',
+            'format': '%(pathname)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'for_errors': {
+            'level': 'ERROR',
+            'format': '%(pathname)s %(levelname)s %(asctime)s %(module)s %(message)s %(exc_info)s'
+        },
+        'for_mail': {
+            'level': 'ERROR',
+            'format': '%(pathname)s %(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filters': ['require_debug_false'],
+            'formatter': 'forwarning',
+            'filename': 'general.log',
+        },
+        'errors': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'for_errors',
+            'filename': 'errors.log',
+        },
+        'security': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'for_errors',
+            'filename': 'security.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['mail_admins', 'errors'],
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'propagate': False,
+            'formatter': 'for_mail',
+        },
+        'django.server': {
+            'handlers': ['mail_admins', 'errors'],
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'propagate': False,
+            'formatter': 'for_mail',
+        },
+        'django.template': {
+            'handlers': ['errors'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.db_backends': {
+            'handlers': ['errors'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.security': {
+            'handlers': ['security'],
+            'propagate': False,
+        },
+    },
+}
 
 SITE_ID = 1
 
@@ -132,8 +225,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -183,9 +275,6 @@ APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 # CELERY_RESULT_BACKEND = 'redis://:{пароль redis}@{Public endpoint}/0'
 CELERY_BROKER_URL = 'redis://:K4UIWCDXfACmJCxMRE14dIP6Dpxmz27H@redis-15272.c284.us-east1-2.gce.cloud.redislabs.com:15272/0'
 CELERY_RESULT_BACKEND = 'redis://:K4UIWCDXfACmJCxMRE14dIP6Dpxmz27H@redis-15272.c284.us-east1-2.gce.cloud.redislabs.com:15272/0'
-
-# CELERY_BROKER_URL = 'redis://localhost:6379'
-# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
